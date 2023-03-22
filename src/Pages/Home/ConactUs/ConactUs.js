@@ -24,7 +24,7 @@ const ConactUs = () => {
                                 <input type="text" placeholder="Subject" className="input input-bordered" />
                             </div>
                             <div className="form-control">
-                                <input type="text" placeholder="Your Massage" className="input input-bordered" />
+                                <textarea type="text" placeholder="Your Massage" className="input input-bordered" />
 
                             </div>
                             <div className="">
