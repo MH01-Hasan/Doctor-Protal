@@ -3,7 +3,6 @@ import { format } from 'date-fns';
 
 const BookingModal = ({ treatment, selected, seTreatment }) => {
     const { name, slots } = treatment;
-
     const date = format(selected, 'PP')
 
 

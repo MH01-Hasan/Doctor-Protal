@@ -1,26 +1,34 @@
 import React from 'react';
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const onSubmit = data => {
         console.log(data)
-
-
     };
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Login now!</h1>
-                    <p className="py-6 w-96">Provident cupiditate voluptatem et in.</p>
+                    <h1 className="text-5xl font-bold">Sign Up!</h1>
+                    <p className="py-6 w-96">Welcome to Our Site Please Sign Up</p>
                 </div>
 
 
                 <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                     <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)}>
+
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text"> Your Name</span>
+                                </label>
+                                <input {...register("name", {
+                                    required: "Name is required"
+                                })} type="text" placeholder="Type here Your Name" className="input input-bordered w-full max-w-xs" />
+                                {errors.name && <p className='text-red-600' role="alert">{errors.name?.message}</p>}
+                            </div>
 
 
                             <div className="form-control w-full max-w-xs">
@@ -29,7 +37,7 @@ const Login = () => {
                                 </label>
                                 <input {...register("email", {
                                     required: "Email Address is required"
-                                })} type="text" placeholder="Type here Your Name" className="input input-bordered w-full max-w-xs" />
+                                })} type="text" placeholder="Type here Your email" className="input input-bordered w-full max-w-xs" />
                                 {errors.email && <p className='text-red-600' role="alert">{errors.email?.message}</p>}
                             </div>
 
@@ -40,9 +48,13 @@ const Login = () => {
                                 </label>
                                 <input {...register("password", {
                                     required: "Password is required",
+                                    pattern: { value: /(?=.*[A-Z].*[A-Z])/, message: 'two uppercase letters' },
                                     minLength: { value: 8, message: 'Password must be 8 charector' }
 
-                                })} type="password" placeholder="Type here Your email" className="input input-bordered w-full max-w-xs" />
+
+
+
+                                })} type="password" placeholder="Type here Your Password" className="input input-bordered w-full max-w-xs" />
                                 {errors.password && <p className='text-red-600' role="alert">{errors.password?.message}</p>}
                             </div>
 
@@ -51,11 +63,13 @@ const Login = () => {
                                 <span className="label-text"> Forget Password ?</span>
                             </label>
 
-                            <input type="submit" value='Login' className='btn btn-primary mt-6' />
+                            <input type="submit" value='Sign UP' className='btn btn-primary mt-6' />
                         </form>
+
                         <label className="label">
-                            <span className="label-text"> New to Doctor Protal  <Link to='/signup' className='text-primary font-bold'>Creat an Account</Link></span>
+                            <span className="label-text"> Alredy have an account ? Please <Link to='/Login' className='text-primary font-bold'>Login</Link></span>
                         </label>
+
                         <div className="divider">OR</div>
                         <button className="btn btn-outline">Continue With Google</button>
 
@@ -67,4 +81,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
