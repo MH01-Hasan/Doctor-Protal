@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Contex/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
+
+    const { login } = useContext(AuthContext)
+    const [loginError, setLoginError] = useState('')
+
     const onSubmit = data => {
-        console.log(data)
+        setLoginError('')
+        login(data.email, data.password)
+            .then((userCredential) => {
+
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                setLoginError(errorMessage)
+
+            });
+
 
 
     };
@@ -44,6 +59,7 @@ const Login = () => {
 
                                 })} type="password" placeholder="Type here Your email" className="input input-bordered w-full max-w-xs" />
                                 {errors.password && <p className='text-red-600' role="alert">{errors.password?.message}</p>}
+                                {loginError && <p className='text-red-600 '>{loginError} </p>}
                             </div>
 
 
