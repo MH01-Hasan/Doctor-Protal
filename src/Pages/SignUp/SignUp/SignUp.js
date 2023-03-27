@@ -7,18 +7,31 @@ const SignUp = () => {
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const { creatuser } = useContext(AuthContext)
+    const { creatuser, updateUser, user } = useContext(AuthContext)
+    console.log(user)
 
     const onSubmit = data => {
-
         creatuser(data.email, data.password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user)
+
+            .then((result) => {
+
+                const namedispaly = {
+                    displayName: data.name
+                }
+                updateUser(namedispaly)
+                    .then(() => {
+
+                    })
+                    .catch((error) => {
+
+
+                    });
+
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 console.log(errorMessage)
+
 
             });
     };

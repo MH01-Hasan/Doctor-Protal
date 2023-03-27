@@ -12,12 +12,17 @@ const Navbar = () => {
 
     const menuitem = <>
         <li><Link to='/'>Home</Link></li>
-        <li><Link to='/About'>About</Link></li>
-        <li><Link to='/Contact'>Contact</Link></li>
-        <li><Link to='/Reviews'>Reviews</Link></li>
-        <li><Link to='/Appointment'>Appointment</Link></li>
-        {user?.uid ? <button onClick={handelsingout} className="btn btn-error">Sing Out</button>
-            : <li><Link to='/Login'>Login</Link></li>
+        <li><Link to='/about'>About</Link></li>
+        <li><Link to='/contact'>Contact</Link></li>
+        <li><Link to='/reviews'>Reviews</Link></li>
+        <li><Link to='/appointment'>Appointment</Link></li>
+
+
+        {user?.uid ? <>
+            <li><Link to='/dashboard'>Dashboard</Link></li>
+            <button onClick={handelsingout} className="btn btn-error">Sing Out</button>
+        </>
+            : <li><Link to='/login'>Login</Link></li>
 
         }
 

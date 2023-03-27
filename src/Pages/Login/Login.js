@@ -6,13 +6,16 @@ import { AuthContext } from '../../Contex/AuthProvider';
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const { login } = useContext(AuthContext)
+    const { login, singgoogle, user } = useContext(AuthContext)
+    console.log(user)
+
+
     const [loginError, setLoginError] = useState('')
 
     const onSubmit = data => {
         setLoginError('')
         login(data.email, data.password)
-            .then((userCredential) => {
+            .then(() => {
 
             })
             .catch((error) => {
@@ -24,6 +27,10 @@ const Login = () => {
 
 
     };
+
+    const handelgoogle = () => {
+        singgoogle()
+    }
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -73,7 +80,7 @@ const Login = () => {
                             <span className="label-text"> New to Doctor Protal  <Link to='/signup' className='text-primary font-bold'>Creat an Account</Link></span>
                         </label>
                         <div className="divider">OR</div>
-                        <button className="btn btn-outline">Continue With Google</button>
+                        <button className="btn btn-outline" onClick={handelgoogle}>Continue With Google</button>
 
 
                     </div>
