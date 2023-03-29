@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from '../FireBase/firebase.config';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 
@@ -8,12 +9,19 @@ export const AuthContext = createContext();
 const auth = getAuth(app)
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState('');
     const provider = new GoogleAuthProvider();
+
+
+    const [user, setUser] = useState('');
+    const [loding, setLoding] = useState(true)
+
+
+
 
 
     //---------------------------------------Creat User--...............----------------//
     const creatuser = (email, password) => {
+        setLoding(true)
         return createUserWithEmailAndPassword(auth, email, password)
 
     }
@@ -27,8 +35,11 @@ const AuthProvider = ({ children }) => {
     //---------------------------------------Google Login--...............----------------//
 
     const singgoogle = () => {
+        setLoding(true)
         return signInWithPopup(auth, provider)
             .then((result) => {
+
+
 
 
             }).catch((error) => {
@@ -41,6 +52,7 @@ const AuthProvider = ({ children }) => {
     }
     //---------------------------------------Login--...............----------------//
     const login = (email, password) => {
+        setLoding(true)
         return signInWithEmailAndPassword(auth, email, password)
 
     }
@@ -49,6 +61,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsuccribe = onAuthStateChanged(auth, Curentuser => {
             setUser(Curentuser)
+            setLoding(false)
 
         });
         return () => unsuccribe();
@@ -56,6 +69,7 @@ const AuthProvider = ({ children }) => {
     }, [])
     //---------------------------------------Sing Out--...............----------------//
     const singout = () => {
+        setLoding(true)
         signOut(auth)
             .then(() => {
 
@@ -72,6 +86,7 @@ const AuthProvider = ({ children }) => {
         login,
         singout,
         user,
+        loding,
         updateUser,
         singgoogle
 

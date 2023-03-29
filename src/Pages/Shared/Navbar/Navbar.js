@@ -16,10 +16,11 @@ const Navbar = () => {
         <li><Link to='/contact'>Contact</Link></li>
         <li><Link to='/reviews'>Reviews</Link></li>
         <li><Link to='/appointment'>Appointment</Link></li>
+        <li><Link to='/dashboard'>Dashboard</Link></li>
 
 
         {user?.uid ? <>
-            <li><Link to='/dashboard'>Dashboard</Link></li>
+
             <button onClick={handelsingout} className="btn btn-error">Sing Out</button>
         </>
             : <li><Link to='/login'>Login</Link></li>

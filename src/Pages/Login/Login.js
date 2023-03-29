@@ -1,13 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contex/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const { login, singgoogle, user } = useContext(AuthContext)
-    console.log(user)
+    const { login, singgoogle } = useContext(AuthContext)
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const from = location.state?.from?.pathname || "/";
+
 
 
     const [loginError, setLoginError] = useState('')
@@ -15,7 +19,10 @@ const Login = () => {
     const onSubmit = data => {
         setLoginError('')
         login(data.email, data.password)
-            .then(() => {
+            .then((result) => {
+                const user = result.user
+
+                navigate(from, { replace: true })
 
             })
             .catch((error) => {
@@ -30,6 +37,7 @@ const Login = () => {
 
     const handelgoogle = () => {
         singgoogle()
+        navigate(from, { replace: true })
     }
     return (
         <div className="hero min-h-screen bg-base-200">
