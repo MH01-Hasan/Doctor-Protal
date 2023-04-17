@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { format } from 'date-fns';
+import { AuthContext } from '../../../Contex/AuthProvider';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const BookingModal = ({ treatment, selected, seTreatment }) => {
     const { name, slots } = treatment;
     const date = format(selected, 'PP')
+    const { user } = useContext(AuthContext)
+    console.log(user)
+    const bookingCreat = new Date()
+    const creat = format(bookingCreat, 'PP')
 
 
     const handelBooking = event => {
@@ -17,15 +24,39 @@ const BookingModal = ({ treatment, selected, seTreatment }) => {
         const BookingData = {
             appointmentdate: date,
             treatmentName: name,
-            bookingcreationdate: (new Date()),
+            bookingcreationdate: creat,
             slot,
             patientName,
             email,
             Phone,
 
         }
+
+        fetch('http://localhost:5000/bookings', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(BookingData)
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.acknowledged) {
+                    seTreatment(null)
+                    toast.success("Success Notification !", {
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                }
+
+            })
+
+
+
+
+
         // model off whwen data save to server then model of and dispaly show success massage
-        seTreatment(null)
+
 
         console.log(BookingData)
 
@@ -43,7 +74,7 @@ const BookingModal = ({ treatment, selected, seTreatment }) => {
                     <form onSubmit={handelBooking} className='mt-10'>
                         <input type="text" disabled value={date} className="input input-bordered input-accent mt-3  w-full " />
 
-                        <select name='slot' className="select select-bordered  mt-3 w-full ">
+                        <select name='slot' required className="select select-bordered  mt-3 w-full ">
                             <option disabled selected>Select your Time</option>
                             {
                                 slots?.map((data, i) => <option
@@ -54,8 +85,8 @@ const BookingModal = ({ treatment, selected, seTreatment }) => {
                                 </option>)
                             }
                         </select>
-                        <input name='patientName' type="text" required placeholder="Your Name" className="input input-bordered input-accent mt-3  w-full " />
-                        <input name='email' type="email" required placeholder="Email" className="input input-bordered input-accent  mt-3 w-full " />
+                        <input name='patientName' type="text" defaultValue={user?.displayName} disabled required placeholder="Your Name" className="input input-bordered input-accent mt-3  w-full " />
+                        <input name='email' type="email" defaultValue={user?.email} disabled required placeholder="Email" className="input input-bordered input-accent  mt-3 w-full " />
                         <input name='Phone' type="text" required placeholder="Phone" className="input input-bordered input-accent mt-3  w-full " />
                         <br></br>
                         <input type="submit" value="Submite" className='cursor-pointer mt-6 bg-primary p-4 w-32 h-12 rounded-lg text-white font-bold' />

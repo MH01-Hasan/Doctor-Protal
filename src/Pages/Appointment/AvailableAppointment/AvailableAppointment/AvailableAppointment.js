@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 import AppointmentOptions from './AppointmentOptions';
 import BookingModal from '../../BookingModal/BookingModal';
+import { useQuery } from '@tanstack/react-query'
 
 const AvailableAppointment = ({ selected }) => {
-    const [appointmentOptions, setappointmentOptions] = useState([])
+
     const [treatment, seTreatment] = useState(null)
 
-    useEffect(() => {
-        fetch('appointmentOptions.json')
+    // fetch data in react Query//
+    const { data: appointmentOptions = [] } = useQuery({
+        queryKey: ['appointmentOptions'],
+        queryFn: () => fetch('http://localhost:5000/appointmentOptions')
             .then(res => res.json())
-            .then(data => setappointmentOptions(data))
-    }, [])
+
+    })
+    // fetch data in react Query//
 
 
     return (
