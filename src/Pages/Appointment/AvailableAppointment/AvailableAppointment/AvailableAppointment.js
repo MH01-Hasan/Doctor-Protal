@@ -7,16 +7,18 @@ import { useQuery } from '@tanstack/react-query'
 const AvailableAppointment = ({ selected }) => {
 
     const [treatment, seTreatment] = useState(null)
+    const date = format(selected, 'PP')
 
     // fetch data in react Query//
     const { data: appointmentOptions = [] } = useQuery({
-        queryKey: ['appointmentOptions'],
-        queryFn: () => fetch('http://localhost:5000/appointmentOptions')
+        queryKey: ['appointmentOptions', date],
+        queryFn: () => fetch(`http://localhost:5000/appointmentOptions?date=${date}`)
             .then(res => res.json())
+
 
     })
     // fetch data in react Query//
-
+    console.log(appointmentOptions)
 
     return (
         <section>

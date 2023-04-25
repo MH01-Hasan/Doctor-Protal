@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
 import { format } from 'date-fns';
 import { AuthContext } from '../../../Contex/AuthProvider';
-import { toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/ReactToastify.min.css";
 
 const BookingModal = ({ treatment, selected, seTreatment }) => {
     const { name, slots } = treatment;
     const date = format(selected, 'PP')
     const { user } = useContext(AuthContext)
-    console.log(user)
     const bookingCreat = new Date()
     const creat = format(bookingCreat, 'PP')
 
-
+    //User Input  collection for apporment Form  Handel//
     const handelBooking = event => {
         event.preventDefault()
         const form = event.target;
@@ -31,7 +30,7 @@ const BookingModal = ({ treatment, selected, seTreatment }) => {
             Phone,
 
         }
-
+        //......................................Apporment Data Sent Database.............................////
         fetch('http://localhost:5000/bookings', {
             method: "POST",
             headers: {
@@ -43,24 +42,18 @@ const BookingModal = ({ treatment, selected, seTreatment }) => {
             .then(res => res.json())
             .then(data => {
                 if (data?.acknowledged) {
-                    seTreatment(null)
                     toast.success("Success Notification !", {
                         position: toast.POSITION.TOP_CENTER
                     });
+                    seTreatment(null)
+
                 }
 
             })
 
-
-
-
-
         // model off whwen data save to server then model of and dispaly show success massage
 
-
         console.log(BookingData)
-
-
     }
 
     return (
