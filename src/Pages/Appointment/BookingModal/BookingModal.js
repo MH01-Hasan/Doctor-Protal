@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { format } from 'date-fns';
 import { AuthContext } from '../../../Contex/AuthProvider';
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/ReactToastify.min.css";
+import toast, { Toaster } from 'react-hot-toast';
 
-const BookingModal = ({ treatment, selected, seTreatment }) => {
+
+const BookingModal = ({ treatment, selected, seTreatment, refetch }) => {
     const { name, slots } = treatment;
     const date = format(selected, 'PP')
     const { user } = useContext(AuthContext)
@@ -41,23 +41,28 @@ const BookingModal = ({ treatment, selected, seTreatment }) => {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 if (data?.acknowledged) {
-                    toast.success("Success Notification !", {
-                        position: toast.POSITION.TOP_CENTER
-                    });
+                    toast.success('Successfully Appointment!')
                     seTreatment(null)
-
+                    refetch()
                 }
+                else {
+                    toast.error(data?.massege)
+                }
+
 
             })
 
         // model off whwen data save to server then model of and dispaly show success massage
 
-        console.log(BookingData)
     }
 
     return (
         <div>
+            <Toaster
+                position="top-right" />
+
             <input type="checkbox" id="booking-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">

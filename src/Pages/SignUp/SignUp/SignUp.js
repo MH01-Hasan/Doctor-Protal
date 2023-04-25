@@ -23,23 +23,39 @@ const SignUp = () => {
                 }
                 updateUser(namedispaly)
                     .then(() => {
+                        saveUsrs(data.name, data.email)
+
 
                     })
-                    .catch((error) => {
+                    .catch((error) => { });
 
-
-                    });
-
-                navigate(from, { replace: true })
 
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 console.log(errorMessage)
 
-
             });
     };
+    //user information  save data base
+    const saveUsrs = (name, email) => {
+        const user = { name, email }
+        fetch('http://localhost:5000/users', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                navigate(from, { replace: true })
+
+            })
+
+
+    }
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row-reverse">
