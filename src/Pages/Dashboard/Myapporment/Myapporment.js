@@ -10,7 +10,11 @@ const Myapporment = () => {
 
     const { data: bookings = [], refetch } = useQuery({
         queryKey: [' bookings', user?.email],
-        queryFn: () => fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+        queryFn: () => fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessTocken')}`
+            }
+        })
             .then(res => res.json())
 
     })
