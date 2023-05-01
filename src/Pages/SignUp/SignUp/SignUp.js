@@ -2,17 +2,23 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Contex/AuthProvider';
+import { useState } from 'react';
+import useToken from '../../../hooks/useToken';
 
 const SignUp = () => {
-
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
-    const { creatuser, updateUser, user } = useContext(AuthContext)
+    const { creatuser, updateUser } = useContext(AuthContext)
+    const [createmail, setCreatemail] = useState('')
+    const [token] = useToken(createmail)
     const location = useLocation()
     const navigate = useNavigate()
 
     const from = location.state?.from?.pathname || "/";
 
+    if (token) {
+        navigate(from, { replace: true })
+    }
     const onSubmit = data => {
         creatuser(data.email, data.password)
 
@@ -50,25 +56,14 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(data => {
-                getUserToken(email)
+                setCreatemail(email)
+
 
             })
 
     }
 
-    const getUserToken = (email) => {
-        fetch(`http://localhost:5000/jwt?email=${email}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data?.accessTocken) {
-                    localStorage.setItem('accessTocken', data?.accessTocken)
-                    navigate(from, { replace: true })
 
-                }
-
-            })
-
-    }
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -132,8 +127,6 @@ const SignUp = () => {
                             <span className="label-text"> Alredy have an account ? Please <Link to='/Login' className='text-primary font-bold'>Login</Link></span>
                         </label>
 
-                        <div className="divider">OR</div>
-                        <button className="btn btn-outline">Continue With Google</button>
 
 
                     </div>

@@ -5,20 +5,22 @@ import { useQuery } from '@tanstack/react-query';
 const Myapporment = () => {
 
     const { user } = useContext(AuthContext)
-
-
-
-    const { data: bookings = [], refetch } = useQuery({
+    const url = `http://localhost:5000/bookings?email=${user?.email}`
+    const { data = [], refetch } = useQuery({
         queryKey: [' bookings', user?.email],
-        queryFn: () => fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
-            headers: {
-                authorization: `bearer ${localStorage.getItem('accessTocken')}`
-            }
-        })
-            .then(res => res.json())
+        queryFn: async () => {
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessTocken')}`
+                }
+            })
+            const data = await res.json()
+            return data
+        }
 
     })
-    refetch()
+
+
     return (
         <div>
             <h1 className='text-3xl font-bold mb-5'>My Apporment</h1>
@@ -39,7 +41,7 @@ const Myapporment = () => {
                     <tbody>
                         {/* row 1 */}
                         {
-                            bookings.map((data, index) => <tr key={data._id}>
+                            data?.map((data, index) => <tr key={data._id}>
                                 <td>{index + 1}</td>
 
                                 <td>{data?.patientName}</td>
