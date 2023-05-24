@@ -13,14 +13,14 @@ const Login = () => {
 
 
     const [logincreatemail, setLogincreatemail] = useState('')
-    const [token] = useToken(logincreatemail)
+    // const [token] = useToken(logincreatemail)
     const from = location.state?.from?.pathname || "/";
 
     const [loginError, setLoginError] = useState('')
 
-    if (token) {
-        navigate(from, { replace: true })
-    }
+    // if (token) {
+    //     navigate(from, { replace: true })
+    // }
 
     const onSubmit = data => {
         setLoginError('')
@@ -28,7 +28,7 @@ const Login = () => {
             .then((result) => {
                 const user = result.user
 
-                setLogincreatemail(data?.email)
+                // setLogincreatemail(data?.email)
 
             })
             .catch((error) => {

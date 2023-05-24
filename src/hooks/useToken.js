@@ -8,8 +8,8 @@ const useToken = email => {
                 .then(res => res.json())
                 .then(data => {
                     if (data?.accessTocken) {
-                        localStorage.setItem('accessTocken', data?.accessTocken)
-                        setToken(data?.accessTocken)
+                        localStorage.setItem('accessTocken', data.accessTocken)
+                        setToken(data.accessTocken)
 
                     }
 

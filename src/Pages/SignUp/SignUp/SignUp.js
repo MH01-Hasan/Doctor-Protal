@@ -29,7 +29,7 @@ const SignUp = () => {
                 }
                 updateUser(namedispaly)
                     .then(() => {
-                        saveUsrs(data.name, data.email)
+                        saveUsrs(data?.name, data?.email)
 
 
                     })
@@ -43,7 +43,8 @@ const SignUp = () => {
 
             });
     };
-    //user information  save data base
+    // user information  save data base
+
     const saveUsrs = (name, email) => {
         const user = { name, email }
         fetch('http://localhost:5000/users', {
