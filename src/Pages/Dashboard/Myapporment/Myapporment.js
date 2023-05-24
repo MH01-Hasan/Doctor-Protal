@@ -5,8 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 const Myapporment = () => {
 
     const { user } = useContext(AuthContext)
+
     const url = `http://localhost:5000/bookings?email=${user?.email}`
-    const { data = [], refetch } = useQuery({
+    const { data = [] } = useQuery({
         queryKey: [' bookings', user?.email],
         queryFn: async () => {
             const res = await fetch(url, {
@@ -17,9 +18,10 @@ const Myapporment = () => {
             const data = await res.json()
             return data
         }
+     
 
     })
-
+console.log(data)
 
     return (
         <div>
@@ -41,7 +43,7 @@ const Myapporment = () => {
                     <tbody>
                         {/* row 1 */}
                         {
-                            data?.map((data, index) => <tr key={data._id}>
+                            data?.map((data, index) => <tr key={data?._id}>
                                 <td>{index + 1}</td>
 
                                 <td>{data?.patientName}</td>
