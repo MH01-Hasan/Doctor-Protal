@@ -105,7 +105,7 @@ const SignUp = () => {
                                 </label>
                                 <input {...register("password", {
                                     required: "Password is required",
-                                    pattern: { value: /(?=.*[A-Z].*[A-Z])/, message: 'two uppercase letters' },
+                                    pattern: { value: /(?=.*[A-Z])/, message: 'one uppercase letters' },
                                     minLength: { value: 8, message: 'Password must be 8 charector' }
 
 

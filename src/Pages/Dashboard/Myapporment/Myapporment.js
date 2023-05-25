@@ -42,7 +42,7 @@ console.log(data)
                     </thead>
                     <tbody>
                         {/* row 1 */}
-                        {
+                        {data &&
                             data?.map((data, index) => <tr key={data?._id}>
                                 <td>{index + 1}</td>
 
