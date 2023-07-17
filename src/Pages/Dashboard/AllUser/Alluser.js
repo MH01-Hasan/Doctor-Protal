@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 const Alluser = () => {
-  const url = `http://localhost:5000/users`;
+  const url = `https://doctor-protal-server.vercel.app/users`;
   const { data = [], refetch } = useQuery({
     queryKey: [" users"],
     queryFn: async () => {
@@ -13,7 +13,7 @@ const Alluser = () => {
   });
 
   const handelMakeadmin = (id) => {
-    fetch(`http://localhost:5000/updateuser/admin/${id}`, {
+    fetch(`https://doctor-protal-server.vercel.app/updateuser/admin/${id}`, {
       method: "PUT",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessTocken")}`,

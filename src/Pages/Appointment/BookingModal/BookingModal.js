@@ -29,7 +29,7 @@ const BookingModal = ({ treatment, selected, seTreatment, refetch }) => {
       Phone,
     };
     //......................................Apporment Data Sent Database.............................////
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://doctor-protal-server.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",

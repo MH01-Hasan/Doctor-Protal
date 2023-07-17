@@ -13,7 +13,7 @@ const ManageDoctor = () => {
   };
 
   // add a Doctor
-  const url = `http://localhost:5000/doctor`;
+  const url = `https://doctor-protal-server.vercel.app/doctor`;
   const {
     data = [],
     isLoading,
@@ -33,7 +33,7 @@ const ManageDoctor = () => {
 
   // delete Docotr
   const handelDoctorDlete = (doctor) => {
-    fetch(`http://localhost:5000/doctor/${doctor?._id}`, {
+    fetch(`https://doctor-protal-server.vercel.app/doctor/${doctor?._id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessTocken")}`,

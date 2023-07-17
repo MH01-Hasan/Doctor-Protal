@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 const Myapporment = () => {
   const { user } = useContext(AuthContext);
 
-  const url = `http://localhost:5000/bookings?email=${user?.email}`;
+  const url = `https://doctor-protal-server.vercel.app/bookings?email=${user?.email}`;
   const { data = [], isLoading } = useQuery({
     queryKey: [" bookings", user?.email],
     queryFn: async () => {
